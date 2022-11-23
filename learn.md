@@ -1,3 +1,4 @@
+# Part 1. Docker
 ## how to create a container
 pull and run a container:  
 `docker run -p 10000:8888 jupyter/scipy-notebook:85f615d5cafa`
@@ -16,7 +17,7 @@ mount a volume:
 
 ## how to install a package into a container
 build a new image (with xgboost installed) from Dockerfile:  
-- create a Dockerfile  
+- create a Dockerfile, specify base image  
 - add RUN command  
 `docker build .`  
 `docker run -v /Users/laede/git/docker-gleb:/home/jovyan -p 8888:8888 cd60c30a0041`  
@@ -25,3 +26,37 @@ build a new image (with xgboost installed) from Dockerfile:
 ## optional
 rename tags of an existing docker image  
 `docker tag cd60c30a0041 alinal55/my_jupyter:latest`
+
+# Part 2. Docker compose
+## how to add docker compose
+- add docker-compose.yaml  
+- specify version, service, build, volumes and ports  
+- `docker-compose up`
+- test that jupyter notebook is running and you can import xgboost
+
+## how to install postgres
+- add `db` into docker compose file
+- docker-compose up
+
+## how to connect to postgres
+- go to jupyter notebook
+- pip install psycopg2-binary
+
+### known issues
+- OperationalError: SCRAM authentication requires libpq version 10 or above
+
+## how to load data to/from postgres in jupyter
+- google: python dataframe to postgresql table
+- ```python
+  from sqlalchemy import create_engine
+  engine = create_engine('postgresql://username:password@localhost:5432/mydatabase')
+  df.to_sql('table_name', engine)```
+- google: python dataframe from postgresql
+- ```python
+  df_from_pg = pd.read_sql_query('select * from wine',con=engine)```
+
+## how to make postgres data persistent
+- google: docker postgres volume
+- add volumes in db part of docker-compose.yml
+- add volumes section in docker-compose.yml, specify the name and don't forget a colon
+- 
