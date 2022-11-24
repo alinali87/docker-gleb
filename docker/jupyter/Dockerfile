@@ -1,3 +1,5 @@
 FROM jupyter/datascience-notebook:latest
 
-RUN pip install psycopg2-binary
+COPY requirements.txt requirements.txt
+
+RUN pip install -r requirements.txt

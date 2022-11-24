@@ -1,7 +1,7 @@
-# Part 1. Docker
+# Part 1. Docker basics
 ## how to create a container
 pull and run a container:  
-`docker run -p 10000:8888 jupyter/scipy-notebook:85f615d5cafa`
+`docker run -p 8888:8888 jupyter/scipy-notebook:85f615d5cafa`
 
 ## how to get into the container
 get into the container:  
@@ -12,7 +12,7 @@ copy a file to the running container:
 `docker cp wine.csv 6670b433ce5d:/home/jovyan/wine.csv`
 
 ## how to run a container with volume
-mount a volume:  
+mount a volume (in fact it's not a volume - it's a bind mount):  
 `docker run -v /Users/laede/git/docker-gleb:/home/jovyan -p 8888:8888 jupyter/scipy-notebook:85f615d5cafa`
 
 ## how to install a package into a container
@@ -30,7 +30,7 @@ rename tags of an existing docker image
 # Part 2. Docker compose
 ## how to add docker compose
 - add docker-compose.yaml  
-- specify version, service, build, volumes and ports  
+- specify version, service, image/build, volumes and ports  
 - `docker-compose up`
 - test that jupyter notebook is running and you can import xgboost
 
@@ -41,9 +41,6 @@ rename tags of an existing docker image
 ## how to connect to postgres
 - go to jupyter notebook
 - pip install psycopg2-binary
-
-### known issues
-- OperationalError: SCRAM authentication requires libpq version 10 or above
 
 ## how to load data to/from postgres in jupyter
 - google: python dataframe to postgresql table
@@ -57,6 +54,5 @@ rename tags of an existing docker image
 
 ## how to make postgres data persistent
 - google: docker postgres volume
-- add volumes in db part of docker-compose.yml
+- add volumes in db section of docker-compose.yml
 - add volumes section in docker-compose.yml, specify the name and don't forget a colon
-- 

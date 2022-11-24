@@ -1,20 +1,18 @@
 version: "3"
 services:
-  jupyter:
-    build: ./docker/jupyter
+  my_jupyter:
+    build: ./docker/jupyter/
     volumes:
-      - /Users/laede/git/docker-gleb:/home/jovyan
+      - .:/home/jovyan/work
     ports:
       - 8888:8888
-  db:
-    build: ./docker/postgres
+  my_postgres:
+    image: postgres:10-alpine
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=password
     ports:
       - 5432:5432
 volumes:
-  pgdata:
+  postgres_data:
